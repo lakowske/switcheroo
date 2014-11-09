@@ -1,0 +1,42 @@
+
+#define ANALOG_PIN 5
+
+#define LED_PIN 6
+#define LED_PIN2 5
+#define LED_PIN3 4
+
+int brightness = 0;
+int fadeAmount = 1;
+int val = 0;
+
+void setup()
+{
+    pinMode(LED_PIN, OUTPUT);
+    pinMode(LED_PIN2, OUTPUT);
+    pinMode(LED_PIN3, OUTPUT);
+    pinMode(ANALOG_PIN, INPUT);
+    Serial.begin(9600);
+}
+
+void loop()
+{
+
+
+    analogWrite(LED_PIN, brightness);
+    analogWrite(LED_PIN2, brightness);
+    digitalWrite(LED_PIN3, HIGH);
+    //analogWrite(LED_PIN3, brightness);
+    val = analogRead(ANALOG_PIN);
+    brightness = brightness + (fadeAmount);
+
+    if (brightness == 0 || brightness == 255) {
+       //brightness = 1;
+       fadeAmount = -fadeAmount;
+       Serial.println(val);
+       Serial.println(brightness);
+    }
+
+    delay(10);
+
+}
+

@@ -1,0 +1,110 @@
+
+#define ANALOG_PIN 5
+
+#define LED_PIN1 6
+#define LED_PIN2 5
+#define LED_PIN3 4
+
+int brightness = 0;
+int fadeAmount = 1;
+int val = 0;
+int dif = 0;
+int target = 1010;
+
+String inputString ="";
+boolean stringComplete = false;
+String s1on = "(on 1)";
+String s1off = "(off 1)";
+String s1input = "(input 1)";
+String s1output = "(output 1)";
+String s2on = "(on 2)";
+String s2off = "(off 2)";
+
+void pulse(int pin, long cycles) {
+  digitalWrite(pin, HIGH);
+  for (long i = 0 ; i < cycles ; i++) {
+	i++;
+  }
+  digitalWrite(pin, LOW);
+}
+
+void setup()
+{
+    pinMode(LED_PIN1, OUTPUT);
+    pinMode(LED_PIN2, OUTPUT);
+    pinMode(LED_PIN3, OUTPUT);
+    pinMode(ANALOG_PIN, INPUT);
+    Serial.begin(9600);
+	inputString.reserve(100);
+}
+
+void loop()
+{
+
+  //digitalWrite(LED_PIN1, HIGH);
+  //digitalWrite(LED_PIN2, HIGH);
+  //digitalWrite(LED_PIN3, LOW);
+  delay(100);
+  val = analogRead(ANALOG_PIN);
+  dif = val - target;
+  Serial.println(val);
+  Serial.println(dif);
+  if (dif < 0) {
+	Serial.println("pulsing");
+	pinMode(LED_PIN1, OUTPUT);
+	digitalWrite(LED_PIN1, HIGH);
+	delay(2000);
+	digitalWrite(LED_PIN1, LOW);
+	pinMode(LED_PIN1, INPUT);
+  } else {
+	Serial.println("sinking");
+	digitalWrite(LED_PIN2, HIGH);
+	delay(50);
+	digitalWrite(LED_PIN2, LOW);
+  }
+
+}
+
+
+void serialEvent() {
+  while (Serial.available()) {
+	char inChar = (char)Serial.read();
+	String message = String(inChar);
+	if (inChar == 13) {
+	  stringComplete = true;
+	  handleLine(inputString);
+	  inputString = "";
+	  stringComplete = false;
+	} else {
+	  inputString += message;
+	}
+    
+  }
+
+}
+
+void handleLine(String input) {
+  Serial.println(input);
+  if (input.equals(s1on)) {
+	Serial.println("turning on switch one");
+    digitalWrite(LED_PIN1, HIGH);
+
+  } else if (input.equals(s1off)) {
+	Serial.println("turning off switch one");
+    digitalWrite(LED_PIN1, LOW);
+  } else if (input.equals(s1input)) {
+	Serial.println("setting pin 1 to input");
+	pinMode(LED_PIN1, INPUT);
+  } else if (input.equals(s1output)) {
+	Serial.println("setting pin 1 to output");
+	pinMode(LED_PIN1, OUTPUT);
+  } else if (input.equals(s2on)) {
+	Serial.println("turning on switch two");
+	digitalWrite(LED_PIN2, HIGH);
+  } else if (input.equals(s2off)) {
+	Serial.println("turning off switch two");
+	digitalWrite(LED_PIN2, LOW);
+  }
+
+}
+
