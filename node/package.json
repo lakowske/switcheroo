@@ -9,6 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.10.1"
+    "express": "^4.10.1",
+    "rsvp": "^3.0.14",
+    "serialport": "^1.4.6"
   }
 }
