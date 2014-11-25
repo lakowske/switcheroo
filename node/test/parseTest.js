@@ -4,6 +4,7 @@
 
 require('./UnitTest');
 require('../src/node/parse');
+require('../src/node/atomParser');
 
 var chai = require('chai');
 var sinon = require('sinon');
