@@ -4,8 +4,8 @@ var Transform = require('stream').Transform;
 COMPOSITE = COMPOSITE || {};
 
 COMPOSITE.AtomParser = function(options) {
-    if (!(this instanceof AtomParser))
-        return new AtomParser(options);
+    if (!(this instanceof COMPOSITE.AtomParser))
+        return new COMPOSITE.AtomParser(options);
 
     Transform.call(this, options);
     this._inBody = false;
