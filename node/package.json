@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.10.1",
+    "json-streamer": "git://github.com/lakowske/json-streamer.git",
     "rsvp": "^3.0.14",
     "serialport": "^1.4.6"
   },
