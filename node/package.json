@@ -17,6 +17,7 @@
   "devDependencies": {
     "chai": "^1.10.0",
     "sinon": "^1.12.1",
-    "stream-write-test": "git://github.com/lakowske/stream-write-test.git"
+    "stream-write-test": "git://github.com/lakowske/stream-write-test.git",
+    "tape": "^3.0.3"
   }
 }

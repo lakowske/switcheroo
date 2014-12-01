@@ -35,6 +35,7 @@ ArduinoADCToCSV.prototype._transform = function(chunk, encoding, callback) {
     var data = arduinoADC.data;
     var components = arduinoADC.format;
 
+    //write the header if requested
     if (this.writeHeader) {
         var header = '';
         for (var i = 0 ; i < components.length ; i++) {
@@ -43,13 +44,26 @@ ArduinoADCToCSV.prototype._transform = function(chunk, encoding, callback) {
                 header += ','
             }
         }
-
+        header += '\n';
         this.push(header, 'utf8');
         this.writeHeader = false;
-        callback();
-    } else {
-        callback();
     }
+
+    //now write the data
+    for (var i = 0 ; i < data.length ; ) {
+        var row = '';
+        for (var j = 0 ;  j < format.length ; j++) {
+            row += data[i+j]
+            if (j < format.length - 1) {
+                row += ',';
+            }
+        }
+        i += format.length;
+        row += '\n';
+        this.push(row, 'utf8');
+    }
+
+    callback();
 }
 
 module.exports = ArduinoADCToCSV;

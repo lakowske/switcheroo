@@ -7,7 +7,7 @@ var ArduinoADCToCSV = require('../src/ArduinoADCToCSV');
 var WriteTest = require('stream-write-test');
 
 test('show ArduinoADCToCSV behaves as expected', function(t) {
-    var expectedChunks = ['x,y'];
+    var expectedChunks = ['x,y\n', '0,1\n', '1,2\n', '2,3\n'];
     var tests = expectedChunks.length;
     t.plan(tests)
 
@@ -26,6 +26,4 @@ test('show ArduinoADCToCSV behaves as expected', function(t) {
     var json = JSON.stringify(adcChunk);
     arduinoADC.write(json)
     arduinoADC.end();
-    t.strictEqual('a', 'a', 'chunks should be equal');
-    t.end();
 })
